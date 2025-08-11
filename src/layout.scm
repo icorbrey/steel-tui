@@ -21,6 +21,24 @@
          Flex::Center
          Flex::Start
          Flex::End
+         Padding
+         Padding->Horizontal
+         Padding->Vertical
+         Rect
+         Rect->height
+         Rect->width
+         Rect->left
+         Rect->top
+         Rect::bottom
+         Rect::offset
+         Rect::inner
+         Rect::right
+         Rect::area
+         Rect::left
+         Rect::top
+         Spacing
+         Spacing::Overlap
+         Spacing::Space
          )
 
 ;; @doc A constraint that defines the size of a layout element.
@@ -174,4 +192,70 @@
 (define Flex::Start "start")
 
 ;; @doc Aligns items to the end of the container.
-(define Flex::End "end")
+(define Flex::End' "end")
+
+;; @doc The amount of space to pad the inside of a rect with.
+(struct Padding (
+          #:horizontal [horizontal 0]
+          #:vertical [vertical 0]
+        ))
+
+(define Padding->horizontal Padding-horizontal)
+(define Padding->vertical Padding-vertical)
+
+;; @doc The amount of space to shift a rect by.
+(struct Offset (
+          #:x [x 0]
+          #:y [y 0]
+        ))
+
+(define Offset->x Offset-x)
+(define Offset->y Offset-y)
+
+;; @doc A rectangular area used to compute layout.
+(struct Rect (
+          #:height [height 0]
+          #:width [width 0]
+          #:left [left 0]
+          #:top [top 0]
+        ))
+
+(define Rect->height Rect-height)
+(define Rect->width Rect-width)
+(define Rect->x Rect-x)
+(define Rect->y Rect-y)
+
+;; @doc The area of the rectangle.
+(define (Rect::area self) (* (Rect->height self) (Rect->width self)))
+
+;; @doc The y-value of the bottom edge of the rectangle.
+(define (Rect::bottom self) (+ (Rect->height self) (Rect->y self)))
+
+;; @doc The x-value of the right edge of the rectangle.
+(define (Rect::right self) (+ (Rect->width self) (Rect->x self)))
+
+;; @doc The x-value of the left edge of the rectangle.
+(define Rect::left Rect->x)
+
+;; @doc The y-value of the top edge of the rectangle.
+(define Rect::top Rect->y)
+
+;; @doc Returns a new rectangle placed within this rectangle padded by the
+;;      given amount.
+(define (Rect::inner self padding)
+  (Rect #:height (- (Rect->height self) (* 2 (Padding->vertical padding)))
+        #:width (- (Rect->width self) (* 2 (Padding->horizontal padding)))
+        #:left (+ 1 (Rect->left self))
+        #:top (+1 (Rect->top self))))
+
+;; @doc Returns a new rectangle offset by the given amount.
+(define (Rect::offset self offset)
+  (Rect #:left (+ (Offset->x offset) (Rect->left self))
+        #:top (+ (Offset->y offset) (Rect->top self))
+        #:height (Rect->height self)
+        #:width (Rect->width self)))
+
+(struct Spacing (type value))
+
+(define (Spacing::Overlap value) (Spacing "overlap" value))
+(define (Spacing::Space value) (Spacing "space" value))
