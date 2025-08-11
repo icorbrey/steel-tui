@@ -13,7 +13,10 @@
          Constraint::from_lengths
          Constraint::from_fills
          Constraint::from_maxes
-         Constraint::from_mins)
+         Constraint::from_mins
+         Direction::Horizontal
+         Direction::Vertical
+         )
 
 ;; @doc A constraint that defines the size of a layout element.
 ;;
@@ -150,3 +153,5 @@
 (define (Constraint::from_maxes values)
   (transduce values (mapping Constraint::Max) (into-list)))
 
+(define Direction::Horizontal "horizontal")
+(define Direction::Vertical "vertical")
