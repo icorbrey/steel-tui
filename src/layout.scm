@@ -21,6 +21,12 @@
          Flex::Center
          Flex::Start
          Flex::End
+         Layout
+         Layout->constraints
+         Layout->direction
+         Layout->spacing
+         Layout->padding
+         Layout->flex
          Padding
          Padding->Horizontal
          Padding->Vertical
@@ -38,8 +44,7 @@
          Rect::top
          Spacing
          Spacing::Overlap
-         Spacing::Space
-         )
+         Spacing::Space)
 
 ;; @doc A constraint that defines the size of a layout element.
 ;;
@@ -193,6 +198,20 @@
 
 ;; @doc Aligns items to the end of the container.
 (define Flex::End' "end")
+
+(struct Layout (
+          #:constraints [constraints '((Constraint::Fill 1))]
+          #:direction [direction Direction::Horizontal]
+          #:spacing [spacing (Spacing::Space 0)]
+          #:padding [padding (Padding)]
+          #:flex [flex Flex::Start]
+        ))
+
+(define Layout->constraints Layout-constraints)
+(define Layout->direction Layout-direction)
+(define Layout->spacing Layout-spacing)
+(define Layout->padding Layout-padding)
+(define Layout->flex Layout-flex)
 
 ;; @doc The amount of space to pad the inside of a rect with.
 (struct Padding (
