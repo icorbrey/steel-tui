@@ -16,6 +16,11 @@
          Constraint::from_mins
          Direction::Horizontal
          Direction::Vertical
+         Flex::SpaceBetween
+         Flex::SpaceAround
+         Flex::Center
+         Flex::Start
+         Flex::End
          )
 
 ;; @doc A constraint that defines the size of a layout element.
@@ -155,3 +160,18 @@
 
 (define Direction::Horizontal "horizontal")
 (define Direction::Vertical "vertical")
+
+;; @doc Adds excess space between each element.
+(define Flex::SpaceBetween "space-between")
+
+;; @doc Adds excess space around each element.
+(define Flex::SpaceAround "space-around")
+
+;; @doc Centers items within the container.
+(define Flex::Center "center")
+
+;; @doc Aligns items to the start of the container.
+(define Flex::Start "start")
+
+;; @doc Aligns items to the end of the container.
+(define Flex::End "end")
